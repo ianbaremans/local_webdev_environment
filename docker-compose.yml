@@ -17,6 +17,22 @@ services:
         networks:
             - code-network
 
+    db:
+        image: mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: my-secret-pw
+        ports:
+            # just if you also want to access it directly from you host
+            # node neede for phpmyadmin
+            - "3306:3306"
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: phpmyadmin
+        depends_on:
+            - db
+        ports:
+            - 8181:80
+
 networks:
     code-network:
         driver: bridge
